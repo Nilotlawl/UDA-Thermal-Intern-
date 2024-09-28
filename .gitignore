@@ -1,1 +1,7 @@
-UDA-Thermal.code-workspace
+
+.vscode/
+archive/
+build/
+__pycache__/
+*.pyc
+UDA-Thermal.code-workspace/
