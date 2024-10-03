@@ -5,3 +5,5 @@ build/
 __pycache__/
 *.pyc
 UDA-Thermal.code-workspace/
+External-Attention-PyTorch/
+data/
