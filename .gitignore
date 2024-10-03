@@ -4,5 +4,5 @@ archive/
 build/
 __pycache__/
 *.pyc
-External-Attention-pytorch/
+/External-Attention-pytorch/
 data/
