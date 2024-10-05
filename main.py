@@ -15,6 +15,14 @@ import torch
 import torchvision.transforms as T
 import torchvision
 
+
+if torch.cuda.is_available():
+    print("CUDA is available! Using GPU.")
+    print(f"Current device: {torch.cuda.current_device()}")
+    print(f"Device name: {torch.cuda.get_device_name(torch.cuda.current_device())}")
+else:
+    print("CUDA is not available. Using CPU.")
+
 device_gpu = 0
 
 warnings.filterwarnings("ignore")
@@ -152,7 +160,7 @@ plt.plot(np.arange(0, n_epoch, 1), np.array(target_accu), label='Target Classifi
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
 plt.legend()
-output_path = r'D:\UDA-Thermal\UDA_thermal\output\acc_alex_SKAttention_digit_final_.png'
+output_path = r'D:\UDA-Thermal\UDA_thermal\output\acc_alex_CoTAttention_digit_final_.png'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 plt.savefig(output_path)
 
