@@ -160,7 +160,7 @@ plt.plot(np.arange(0, n_epoch, 1), np.array(target_accu), label='Target Classifi
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
 plt.legend()
-output_path = r'D:\UDA-Thermal\UDA_thermal\output\acc_alex_ AxialImageTransformer_digit_final_.png'
+output_path = r'D:\UDA-Thermal\UDA_thermal\output\acc_alex_ ShuffleAttention_digit_final_.png'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 plt.savefig(output_path)
 
