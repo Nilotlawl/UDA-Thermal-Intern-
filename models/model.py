@@ -5,8 +5,8 @@ from torchvision import models
 import math
 import torch.nn.functional as F
 #import Pylance
-#from fightingcv_attention.attention. ShuffleAttention import  ShuffleAttention
-from model.attention.ShuffleAttention import  ShuffleAttention
+#from fightingcv_attention.attention. SpatialGroupEnhance import  SpatialGroupEnhance
+from model.attention.SGE import  SpatialGroupEnhance
 
 class BasicConv(nn.Module):
     def __init__(self, in_planes, out_planes, kernel_size, stride=1, padding=0, dilation=1, groups=1, relu=True, bn=True, bias=False):
@@ -86,9 +86,9 @@ class SpatialGate(nn.Module):
         scale = F.sigmoid(x_out) # broadcasting
         return x * scale
 
-class  ShuffleAttention(nn.Module):
+class  SpatialGroupEnhance(nn.Module):
     def __init__(self, gate_channels, reduction_ratio=16, pool_types=['avg', 'lse'], no_spatial=True):
-        super( ShuffleAttention, self).__init__()
+        super( SpatialGroupEnhance, self).__init__()
         self.ChannelGate = ChannelGate(gate_channels, reduction_ratio, pool_types)
         self.no_spatial=no_spatial
         #if not no_spatial:
@@ -118,8 +118,8 @@ class CNNModel(nn.Module):
         self.bn2 = nn.BatchNorm2d(64) # 64 for digit 128 for alpha
         self.relu = nn.ReLU(True)
 
-        self. ShuffleAttention1 =  ShuffleAttention(128) #128 for digit 256 for alpha
-        self. ShuffleAttention2 =  ShuffleAttention(64) # 64 for digit 128 for alpha
+        self. SpatialGroupEnhance1 =  SpatialGroupEnhance(128) #128 for digit 256 for alpha
+        self. SpatialGroupEnhance2 =  SpatialGroupEnhance(64) # 64 for digit 128 for alpha
 
         self.bottleneck2 = nn.Sequential()
         self.bottleneck2.add_module('b2_conv1',nn.Conv2d(128, 32, kernel_size=1,stride=1,padding = 'same')) # change with 128 and 32 for digit, 256 and 64 for alpha
@@ -179,11 +179,11 @@ class CNNModel(nn.Module):
         feature = self.relu(self.bn1(self.conv4(feature)))
         feature = self.bottleneck2(feature)
         #feature = feature_o1 + feature_n1
-        feature = self. ShuffleAttention1(feature)
+        feature = self. SpatialGroupEnhance1(feature)
         feature = self.relu(self.bn2(self.conv5(feature)))
         feature = self.bottleneck4(feature)
         #feature = feature_o2 + feature_n2
-        feature = self. ShuffleAttention2(feature)
+        feature = self. SpatialGroupEnhance2(feature)
         feature = self.max3(feature)
 
 
